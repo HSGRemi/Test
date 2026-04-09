@@ -25,6 +25,11 @@ def get_index_change(ticker):
     change = ((last - prev) / prev) * 100
     return round(last, 2), round(change, 2)
 
+def format_metric(price, change):
+    if price == "N/A" or change == "N/A":
+        return "N/A", "N/A"
+    return f"{price:,.2f}", f"{change:.2f}%"
+
 headlines=get_headlines()
 
 sp500_price, sp500_change=get_index_change("^GSPC")
