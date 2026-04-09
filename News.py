@@ -9,7 +9,7 @@ st.sidebar.title("Morning Market Digest")
 st.set_page_config(page_title="Morning Market Digest", layout="centered")
 
 st.title("Morning Market Digest")
-st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d)}")
+st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
 def get_headlines():
     url="https://feeds.bbci.co.uk/news/business/rss.xml"
