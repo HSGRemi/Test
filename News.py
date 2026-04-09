@@ -4,7 +4,7 @@ import streamlit as st
 import feedparser
 import yfinance as yf
 import pandas as pd
-import datetime
+from datetime import datetime
 
 st.sidebar.title("Morning Market Digest")
 
