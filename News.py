@@ -17,12 +17,12 @@ def get_headlines():
     return [entry.title for entry in feed.entries[:5]]
 
 def get_index_change(ticker):
-    hist=yf.Ticker(ticker).history(period="2d")
+    hist=yf.Ticker(ticker).history(period="5d")
+    hist = hist["Close"].dropna()
     if len(hist)<2:
-        return None, None
-    prev=hist["Close"].iloc[-2]
-    last=hist["Close"].iloc[-1]
-    change=((last - prev) / prev) * 100
+        return "N/A", "N/A"
+    prev, last = hist.iloc[-2], hist.iloc[-1]
+    change = ((last - prev) / prev) * 100
     return round(last, 2), round(change, 2)
 
 headlines=get_headlines()
