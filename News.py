@@ -44,19 +44,25 @@ st.subheader("Markets")
 col1, col2, col3, col4, col5, col6=st.columns(6)
 
 with col1:
+    price=format_metric(sp500_price)
     st.metric("S&P 500", sp500_price, f"{sp500_change}%")
 
 with col2:
+    price=format_metric(eurostoxx600_price)
     st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
 
 with col3:
+    price=format_metric(MSCIworld_price)
     st.metric("MSCI World", MSCIworld_price, f"{MSCI_change}%")
 
 with col4:
+    price=format_metric(HangSeng_price)
     st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
 
 with col5:
+    price=format_metric(Nikkei225_price)
     st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
 
 with col6:
+    price=format_metric(Kospi200_price)
     st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
