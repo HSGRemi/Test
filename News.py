@@ -56,7 +56,7 @@ with col4:
     st.markdown(f"**HangSeng Index**  \nPrice: {HangSeng_price:.2f}  \nChange: {HangSeng_change:+.2f}%")
 
 with col5:
-    st.markdown(f"**Nikkei 225**  \nPrice: {Nikkei225_price:.2f}  \nChange: {Nikkei 225_change:+.2f}%")
+    st.markdown(f"**Nikkei 225**  \nPrice: {Nikkei225_price:.2f}  \nChange: {Nikkei225_change:+.2f}%")
 
 with col6:
     st.markdown(f"**KOSPI 200**  \nPrice: {Kospi200_price:.2f}  \nChange: {Kospi200_change:+.2f}%")
