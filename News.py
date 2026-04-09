@@ -49,7 +49,7 @@ with col1:
 
 with col2:
     price, change=format_metric(eurostoxx600_price, eurostoxx600_change)
-    st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
+    st.metric("EuroStoxx 600", price, change)
 
 with col3:
     price, change=format_metric(MSCIworld_price, MSCI_change)
