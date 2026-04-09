@@ -49,8 +49,7 @@ st.subheader("Markets")
 col1, col2, col3, col4, col5, col6=st.columns(6)
 
 with col1:
-    price, change=format_metric(sp500_price, sp500_change)
-    st.metric("S&P 500", price, change)
+    st.markdown(f"**S&P 500**  \nPrice: {sp500_price:.2f}  \nChange: {sp500_change:+.2f}%")
 
 with col2:
     price, change=format_metric(eurostoxx600_price, eurostoxx600_change)
