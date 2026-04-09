@@ -1,4 +1,3 @@
-pip install feedparser
 import streamlit as st
 import feedparser
 import yfinance as yf
