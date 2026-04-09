@@ -50,7 +50,7 @@ col1, col2, col3, col4, col5, col6=st.columns(6)
 
 with col1:
     price, change=format_metric(sp500_price, sp500_change)
-    st.metric("S&P 500", sp500_price, f"{sp500_change}%")
+    st.metric("S&P 500", price, change)
 
 with col2:
     price, change=format_metric(eurostoxx600_price, eurostoxx600_change)
@@ -58,16 +58,16 @@ with col2:
 
 with col3:
     price, change=format_metric(MSCIworld_price, MSCI_change)
-    st.metric("MSCI World", MSCIworld_price, f"{MSCI_change}%")
+    st.metric("MSCI World", price, change)
 
 with col4:
     price, change=format_metric(HangSeng_price, HangSeng_change)
-    st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
+    st.metric("HangSeng Index", price, change)
 
 with col5:
     price, change=format_metric(Nikkei225_price, Nikkei225_change)
-    st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
+    st.metric("Nikkei 225", price, change)
 
 with col6:
     price, change=format_metric(Kospi200_price, Kospi200_change)
-    st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
+    st.metric("Kospi 200", price, change)
