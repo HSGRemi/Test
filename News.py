@@ -1,3 +1,5 @@
+import sys
+print(sys.executable)
 import streamlit as st
 import feedparser
 import yfinance as yf
