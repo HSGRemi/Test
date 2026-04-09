@@ -25,11 +25,6 @@ def get_index_change(ticker):
     change = ((last - prev) / prev) * 100
     return round(last, 2), round(change, 2)
 
-def format_metric(price, change):
-    if price == "N/A" or change == "N/A":
-        return "N/A", "N/A"
-    return f"{price:,.2f}", f"{change:.2f}%"
-
 headlines=get_headlines()
 
 sp500_price, sp500_change=get_index_change("^GSPC")
@@ -52,21 +47,17 @@ with col1:
     st.markdown(f"**S&P 500**  \nPrice: {sp500_price:.2f}  \nChange: {sp500_change:+.2f}%")
 
 with col2:
-    price, change=format_metric(eurostoxx600_price, eurostoxx600_change)
-    st.metric("EuroStoxx 600", price, change)
+    st.markdown(f"**Eurostoxx 600**  \nPrice: {eurostoxx600_price:.2f}  \nChange: {eurostoxx600_change:+.2f}%")
 
 with col3:
-    price, change=format_metric(MSCIworld_price, MSCI_change)
-    st.metric("MSCI World", price, change)
+    st.markdown(f"**MSCI World**  \nPrice: {MSCIworld_price:.2f}  \nChange: {MSCI_change:+.2f}%")
 
 with col4:
-    price, change=format_metric(HangSeng_price, HangSeng_change)
-    st.metric("HangSeng Index", price, change)
+    st.markdown(f"**HangSeng Index**  \nPrice: {HangSeng_price:.2f}  \nChange: {HangSeng_change:+.2f}%")
 
 with col5:
-    price, change=format_metric(Nikkei225_price, Nikkei225_change)
-    st.metric("Nikkei 225", price, change)
+    st.markdown(f"**Nikkei 225**  \nPrice: {Nikkei225_price:.2f}  \nChange: {Nikkei 225_change:+.2f}%")
 
 with col6:
-    price, change=format_metric(Kospi200_price, Kospi200_change)
-    st.metric("Kospi 200", price, change)
+    st.markdown(f"**KOSPI 200**  \nPrice: {Kospi200_price:.2f}  \nChange: {Kospi200_change:+.2f}%")
+
