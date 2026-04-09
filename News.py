@@ -1,5 +1,3 @@
-import sys
-print(sys.executable)
 import streamlit as st
 import feedparser
 import yfinance as yf
@@ -30,10 +28,10 @@ def get_index_change(ticker):
 headlines=get_headlines()
 
 sp500_price, sp500_change=get_index_change("^GSPC")
-eurostoxx600_price, eurostoxx600_change=get_index_change("^STOXX600E")
-MSCIworld_price, MSCI_change=get_index_change("^MIWO00000PUS")
+eurostoxx600_price, eurostoxx600_change=get_index_change("^STOXX")
+MSCIworld_price, MSCI_change=get_index_change("^URTH")
 HangSeng_price, HangSeng_change=get_index_change("^HSI")
-Nikkei225_price, Nikkei225_change=get_index_change("^NI225")
+Nikkei225_price, Nikkei225_change=get_index_change("^N225")
 Kospi200_price, Kospi200_change=get_index_change("^KS200")
 
 st.subheader("Top News")
