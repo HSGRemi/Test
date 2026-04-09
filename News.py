@@ -49,20 +49,25 @@ st.subheader("Markets")
 col1, col2, col3, col4, col5, col6=st.columns(6)
 
 with col1:
-    st.markdown(f"**S&P 500**  \nPrice: {sp500_price:.2f}  \nChange: {sp500_change:+.2f}%")
+    price, change=format_metric(sp500_price, sp500_change)
+    st.markdown(f"**S&P 500**  \nPrice: {price}  \nChange: {change}")
 
 with col2:
-    st.markdown(f"**Eurostoxx 600**  \nPrice: {eurostoxx600_price:.2f}  \nChange: {eurostoxx600_change:+.2f}%")
+    price, change=format_metric(eurostoxx600_price, eurostoxx600_change)
+    st.markdown(f"**EuroStoxx 600**  \nPrice: {price}  \nChange: {change}")
 
 with col3:
-    st.markdown(f"**MSCI World**  \nPrice: {MSCIworld_price:.2f}  \nChange: {MSCI_change:+.2f}%")
+    price, change=format_metric(MSCIworld_price, MSCI_change)
+    st.markdown(f"**MSCI World**  \nPrice: {price}  \nChange: {change}")
 
 with col4:
-    st.markdown(f"**HangSeng Index**  \nPrice: {HangSeng_price:.2f}  \nChange: {HangSeng_change:+.2f}%")
+    price, change=format_metric(HangSeng_price, HangSeng_change)
+    st.markdown(f"**HangSeng Index**  \nPrice: {price}  \nChange: {change}")
 
 with col5:
-    st.markdown(f"**Nikkei 225**  \nPrice: {Nikkei225_price:.2f}  \nChange: {Nikkei225_change:+.2f}%")
+    price, change=format_metric(Nikkei225_price, Nikkei225_change)
+    st.markdown(f"**Nikkei 225**  \nPrice: {price}  \nChange: {change}")
 
 with col6:
-    st.markdown(f"**KOSPI 200**  \nPrice: {Kospi200_price:.2f}  \nChange: {Kospi200_change:+.2f}%")
-
+    price, change=format_metric(Kospi200_price, Kospi200_change)
+    st.markdown(f"**Kospi 200**  \nPrice: {price}  \nChange: {change}")
