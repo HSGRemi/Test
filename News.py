@@ -41,7 +41,7 @@ for h in headlines:
 
 st.subheader("Markets")
 
-col1, col2=st.columns(2)
+col1, col2, col3, col4, col5, col6=st.columns(6)
 
 with col1:
     st.metric("S&P 500", sp500_price, f"{sp500_change}%")
