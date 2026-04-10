@@ -13,7 +13,7 @@ st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
 @st.cache_data(ttl=1800)
 def get_headlines():
-    feeds=["https://www.ft.com/world?format=rss", "https://feeds.a.dj.com/rss/RSSWorldNews.xml"]
+    feeds=["https://www.ft.com/world?format=rss", "https://www.bloomberg.com/feed/podcast/etf-report.xml"]
     entries=[]
     for url in feeds:
         feed=feedparser.parse(url)
