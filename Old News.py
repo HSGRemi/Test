@@ -11,13 +11,14 @@ st.set_page_config(page_title="Morning Market Digest", layout="centered")
 st.title("Morning Market Digest")
 st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
+@st.cache_data(ttl=1800)
 def get_headlines():
-    url="https://feeds.bbci.co.uk/news/business/rss.xml"
+    url="http://rss.cnn.com/rss/edition_world.rss"
     feed=feedparser.parse(url)
-    return [entry.title for entry in feed.entries[:5]]
+    return [(entry.title, entry.link) for entry in feed.entries[:5]]
 
 def get_index_change(ticker):
-    hist=yf.Ticker(ticker).history(period="2d")
+    hist=yf.Ticker(ticker).history(period="5d")
     if len(hist)<2:
         return None, None
     prev=hist["Close"].iloc[-2]
@@ -25,19 +26,38 @@ def get_index_change(ticker):
     change=((last - prev) / prev) * 100
     return round(last, 2), round(change, 2)
 
+@st.cache_data(ttl=300)
+def get_all_indices():
+    tickers=["^GSPC", "^STOXX", "^URTH", "^HSI", "^N225", "^KS200"]
+    data = yf.download(tickers, period="5d", group="ticker")
+    results={}
+    for ticker in tickers:
+        try:
+            hist=data[ticker]
+            prev=hist["Close"].iloc[-2]
+            last=hist["Close"].iloc[-1]
+            change=((last - prev) / prev) * 100
+            
+            results[ticker] = (round(last, 2), round(change, 2))
+        except:
+            results[ticker] = (None, None)
+    return results
+
 headlines=get_headlines()
 
-sp500_price, sp500_change=get_index_change("^GSPC")
-eurostoxx600_price, eurostoxx600_change=get_index_change("^STOXX")
-MSCIworld_price, MSCI_change=get_index_change("^URTH")
-HangSeng_price, HangSeng_change=get_index_change("^HSI")
-Nikkei225_price, Nikkei225_change=get_index_change("^N225")
-Kospi200_price, Kospi200_change=get_index_change("^KS200")
+results = get_all_indices()
+
+sp500_price, sp500_change=results["^GSPC"]
+eurostoxx600_price, eurostoxx600_change=results["^STOXX"]
+MSCIworld_price, MSCI_change=results["^URTH"]
+HangSeng_price, HangSeng_change=results["^HSI"]
+Nikkei225_price, Nikkei225_change=results["^N225"]
+Kospi200_price, Kospi200_change=results["^KS200"]
 
 st.subheader("Top News")
 
-for h in headlines:
-    st.markdown(f"- {h}")
+for title, link in headlines:
+    st.markdown(f"- [{title}]({link})")
 
 st.subheader("Markets")
 
