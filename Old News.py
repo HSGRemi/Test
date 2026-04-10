@@ -17,7 +17,7 @@ def get_headlines():
     entries=[]
     for url in feeds:
         feed=feedparser.parse(url)
-    return [(entry.title, entry.link) for entry in feed.entries[:8]]
+    return [(entry.title, entry.link) for entry in feed.entries[:6]]
 
 def get_index_change(ticker):
     hist=yf.Ticker(ticker).history(period="5d")
