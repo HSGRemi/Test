@@ -33,7 +33,7 @@ def get_all_indices():
     results={}
     for ticker in tickers:
         try:
-            df=data.[ticker].dropna()
+            df=data[ticker].dropna()
             if len(df)<2:
                 results[name]=(None, None)
                 continue
