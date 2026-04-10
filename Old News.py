@@ -24,7 +24,7 @@ def get_index_change(ticker):
     prev=hist["Close"].iloc[-2]
     last=hist["Close"].iloc[-1]
     change=((last - prev) / prev) * 100
-    return round(last, 3), round(change, 3)
+    return round(last, 2), round(change, 2)
 
 @st.cache_data(ttl=300)
 def get_all_indices():
