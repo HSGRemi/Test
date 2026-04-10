@@ -29,19 +29,34 @@ def get_index_change(ticker):
 @st.cache_data(ttl=300)
 def get_all_indices():
     tickers=["^GSPC", "^STOXX", "^IWDA", "^HSI", "^N225", "^KS200"]
-    data = yf.download(tickers, period="5d", group_by="ticker")
+    data=yf.download(tickers, period="5d", group_by="ticker")
     results={}
     for ticker in tickers:
         try:
+            df=data.[ticker].dropna()
+            if len(df)<2:
+                results[name]=(None, None)
+                continue
+
             hist=data[ticker]
-            prev=hist["Close"].iloc[-2]
-            last=hist["Close"].iloc[-1]
+            prev=df["Close"].iloc[-2]
+            last=df["Close"].iloc[-1]
             change=((last - prev) / prev) * 100
             
-            results[ticker] = (round(last, 2), round(change, 2))
+            results[ticker] = (float(last), float(change)
         except:
             results[ticker] = (None, None)
     return results
+
+def fmt_price(x):
+    if x is None or pd.isna(x):
+        return "N/A"
+    return f"{x:.0f}"
+
+def fmt_change(x):
+    if x is None or pd.isna(x):
+        return "N/A"
+    return f"{color} {x:.2f}%"
 
 headlines=get_headlines()
 
