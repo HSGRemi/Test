@@ -29,7 +29,7 @@ def get_index_change(ticker):
 @st.cache_data(ttl=300)
 def get_all_indices():
     tickers=["^GSPC", "^STOXX", "^URTH", "^HSI", "^N225", "^KS200"]
-    data = yf.download(tickers, period="5d", group="ticker")
+    data = yf.download(tickers, period="5d", group_by="ticker")
     results={}
     for ticker in tickers:
         try:
