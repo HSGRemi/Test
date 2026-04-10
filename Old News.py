@@ -43,9 +43,9 @@ def get_all_indices():
             last=df["Close"].iloc[-1]
             change=((last - prev) / prev) * 100
             
-            results[ticker] = (float(last), float(change))
+            results[ticker]=(round(last, 2), round(change, 2))
         except:
-            results[ticker] = (None, None)
+            results[ticker]=(None, None)
     return results
 
 def fmt_price(x):
