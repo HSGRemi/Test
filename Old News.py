@@ -53,7 +53,7 @@ def get_all_indices():
 def fmt_price(x):
     if x is None or pd.isna(x):
         return "N/A"
-    return f"{x:.0f}"
+    return f"{x:.2f}"
 
 def fmt_change(x):
     if x is None or pd.isna(x):
