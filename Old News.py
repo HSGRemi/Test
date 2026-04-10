@@ -28,7 +28,7 @@ def get_index_change(ticker):
 
 @st.cache_data(ttl=300)
 def get_all_indices():
-    tickers=["^GSPC", "^STOXX", "^IWDA", "^HSI", "^N225", "^KS200"]
+    tickers=["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]
     data=yf.download(tickers, period="5d", group_by="ticker")
     results={}
     for ticker in tickers:
@@ -64,7 +64,6 @@ results = get_all_indices()
 
 sp500_price, sp500_change=results["^GSPC"]
 eurostoxx600_price, eurostoxx600_change=results["^STOXX"]
-MSCIworld_price, MSCI_change=results["^IWDA"]
 HangSeng_price, HangSeng_change=results["^HSI"]
 Nikkei225_price, Nikkei225_change=results["^N225"]
 Kospi200_price, Kospi200_change=results["^KS200"]
@@ -76,7 +75,7 @@ for title, link in headlines:
 
 st.subheader("Markets")
 
-col1, col2, col3, col4, col5, col6=st.columns(6)
+col1, col2, col3, col4, col5=st.columns(5)
 
 with col1:
     st.metric("S&P 500", sp500_price, f"{sp500_change}%")
@@ -85,13 +84,10 @@ with col2:
     st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
 
 with col3:
-    st.metric("MSCI World", MSCIworld_price, f"{MSCI_change}%")
-
-with col4:
     st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
 
-with col5:
+with col4:
     st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
 
-with col6:
+with col5:
     st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
