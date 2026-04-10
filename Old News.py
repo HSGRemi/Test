@@ -28,7 +28,7 @@ def get_index_change(ticker):
 
 @st.cache_data(ttl=300)
 def get_all_indices():
-    tickers=["^GSPC", "^STOXX", "^URTH", "^HSI", "^N225", "^KS200"]
+    tickers=["^GSPC", "^STOXX", "^IWDA", "^HSI", "^N225", "^KS200"]
     data = yf.download(tickers, period="5d", group_by="ticker")
     results={}
     for ticker in tickers:
@@ -49,7 +49,7 @@ results = get_all_indices()
 
 sp500_price, sp500_change=results["^GSPC"]
 eurostoxx600_price, eurostoxx600_change=results["^STOXX"]
-MSCIworld_price, MSCI_change=results["^URTH"]
+MSCIworld_price, MSCI_change=results["^IWDA"]
 HangSeng_price, HangSeng_change=results["^HSI"]
 Nikkei225_price, Nikkei225_change=results["^N225"]
 Kospi200_price, Kospi200_change=results["^KS200"]
