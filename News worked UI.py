@@ -3,10 +3,9 @@ import feedparser
 import yfinance as yf
 import pandas as pd
 from datetime import datetime
+import flag
 
-# ---------------------------
 # PAGE SETTINGS
-# ---------------------------
 st.set_page_config(page_title="Morning Market Digest", layout="centered")
 
 # Simple background color (easy to understand)
@@ -21,7 +20,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📊 Morning Market Digest")
+st.title("Morning Market Digest")
 st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
 st.sidebar.title("Morning Market Digest")
@@ -69,23 +68,13 @@ def format_price(x):
 def format_change(x):
     if x is None or pd.isna(x):
         return "N/A"
-    
-    # Add simple color indicator
-    if x >= 0:
-        return f"🟢 {x:.2f}%"
-    else:
-        return f"🔴 {x:.2f}%"
 
-# ---------------------------
 # LOAD DATA
-# ---------------------------
 headlines = get_headlines()
 results = get_all_indices()
 
-# ---------------------------
 # NEWS SECTION
-# ---------------------------
-st.subheader("📰 Top News")
+st.subheader("Top News")
 
 for title, link in headlines:
     st.markdown(f"- [{title}]({link})")
@@ -114,6 +103,9 @@ with col4:
 with col5:
     price, change = results["^KS200"]
     st.metric("KOSPI 200 🇰🇷", format_price(price), format_change(change))
+
+flag.flag("GBENG")'🏴󠁧󠁢󠁥󠁮󠁧'
+flag.dflagize("Flag of the USA 🇺🇸")
 
 # BEGINNER HELP BOX
 with st.expander("💡 What does this mean?"):
