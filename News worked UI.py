@@ -153,10 +153,10 @@ st.markdown(
 )
 
 # ── HEADER ─────────────────────────────────────────────────────────────────────
-st.title("🌅 Morning Market Digest")
+st.title("Morning Market Digest")
 st.caption(f"Last updated: {datetime.now().strftime('%A, %d %B %Y')}")
 
-st.sidebar.title("🌅 Morning Market Digest")
+st.sidebar.title("Morning Market Digest")
 st.sidebar.write("Simple overview of markets and news.")
 
 # ── FLAG HELPER ────────────────────────────────────────────────────────────────
@@ -205,7 +205,7 @@ def get_all_indices():
 def format_price(x):
     if x is None or (isinstance(x, float) and pd.isna(x)):
         return "N/A"
-    return f"{x:,.2f}"
+    return f"{x:.2f}"
 
 def format_change(x):
     """Return a signed percentage string, e.g. '+1.23%' or '-0.45%'."""
@@ -219,15 +219,12 @@ headlines = get_headlines()
 results   = get_all_indices()
 
 # ── NEWS SECTION ───────────────────────────────────────────────────────────────
-st.markdown('<div class="market-card">', unsafe_allow_html=True)
-st.subheader("📰 Top News")
+st.subheader("Top News")
 for title, link in headlines:
     st.markdown(f"- [{title}]({link})")
-st.markdown('</div>', unsafe_allow_html=True)
 
 # ── MARKETS SECTION ────────────────────────────────────────────────────────────
-st.markdown('<div class="market-card">', unsafe_allow_html=True)
-st.subheader("🌍 Global Markets")
+st.subheader("Global Markets")
 
 INDICES = [
     ("^GSPC",  "S&P 500"),
@@ -244,8 +241,6 @@ for col, (ticker, label) in zip(cols, INDICES):
         # Render the flag image above the metric
         st.markdown(flag_html(TICKER_FLAGS[ticker]), unsafe_allow_html=True)
         st.metric(label, format_price(price), format_change(change))
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 # ── BEGINNER HELP BOX ──────────────────────────────────────────────────────────
 with st.expander("💡 What does this mean?"):
