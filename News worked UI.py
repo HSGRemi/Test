@@ -28,16 +28,25 @@ st.set_page_config(page_title="Morning Market Digest", layout="centered")
 #   To MOVE a blob: change the top% and left% numbers (0 = top/left edge, 100 = bottom/right edge).
  
 BLOBS = [
-    # colour       width   height  top%   left%  speed(s)
-    ("#FF4ECD",   "320px", "280px",  "-5",  "-8",    8),   # hot pink    — top-left corner
-    ("#FFD93D",   "260px", "240px",  "-3",  "88",   10),   # yellow      — top-right corner
-    ("#6CF0C2",   "360px", "300px",  "35",  "-10",  12),   # mint green  — middle-left edge
-    ("#4FC3F7",   "280px", "260px",  "40",  "85",    9),   # sky blue    — middle-right edge
-    ("#FF7043",   "240px", "220px",  "75",  "5",    11),   # coral       — bottom-left
-    ("#B388FF",   "200px", "190px",  "80",  "82",    7),   # purple      — bottom-right
-    ("#FFABAB",   "200px", "180px",  "42",  "30",    9),   # soft pink   — page centre-left
-    ("#A8D8EA",   "180px", "160px",  "50",  "55",   11),   # pale blue   — page centre-right
-    ("#B5EAD7",   "160px", "150px",  "58",  "42",    8),   # mint        — page centre-bottom
+    # colour       width    height   top%  left%  speed(s)
+    # — The page is divided into a 3-column x 3-row grid.
+    # — top%  moves a blob DOWN  the page  (0 = very top,  50 = middle, 85 = near bottom)
+    # — left% moves a blob ACROSS the page (0 = far left,  40 = centre, 75 = far right)
+ 
+    # ROW 1 — top of the page
+    ("#FF4ECD",  "260px", "240px",  "2",  "2",   8),   # hot pink    — top-left
+    ("#FFD93D",  "240px", "220px",  "2",  "40",  10),  # yellow      — top-centre
+    ("#6CF0C2",  "250px", "230px",  "2",  "75",  12),  # mint green  — top-right
+ 
+    # ROW 2 — middle of the page
+    ("#4FC3F7",  "240px", "220px",  "42", "2",   9),   # sky blue    — middle-left
+    ("#FF7043",  "220px", "200px",  "42", "40",  11),  # coral       — middle-centre
+    ("#B388FF",  "230px", "210px",  "42", "75",  7),   # purple      — middle-right
+ 
+    # ROW 3 — bottom of the page
+    ("#FFABAB",  "250px", "230px",  "82", "2",   9),   # soft pink   — bottom-left
+    ("#A8D8EA",  "230px", "210px",  "82", "40",  11),  # pale blue   — bottom-centre
+    ("#B5EAD7",  "240px", "220px",  "82", "75",  8),   # mint        — bottom-right
 ]
  
 # Build one CSS block + one <div> per blob using a loop.
