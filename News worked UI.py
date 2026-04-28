@@ -31,10 +31,23 @@ def get_index_change(ticker):
     hist=yf.Ticker(ticker).history(period="5d")  #looks at the last 5 days so that even if the market is closed over the weekend or holiday it works
     if len(hist) < 2:
         return None, None
-    prev = hist["Close"].iloc[-2]
-    last = hist["Close"].iloc[-1]
-    change = ((last - prev) / prev) * 100
+    prev=hist["Close"].iloc[-2]
+    last=hist["Close"].iloc[-1]
+    change=((last-prev)/prev)*100
     return round(last, 2), round(change, 2)  #so that the numbers show up with rounded decimals
+
+@st.cache_data(ttl=300) #same logic as above, this function is to create a graph of the different indices
+def get_index_history(period):
+    tickers=["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]
+    names={"^GSPC": "S&P 500", "^STOXX": "EuroStoxx 600", "^HSI": "Hang Seng", "^N225": "Nikkei 225", "^KS200": "Kospi 200"}
+    data=yf.download(tickers, period=period, group_by="ticker")
+    frames=[]
+    for ticker in tickers:
+        df = data[ticker][["Close"]].dropna().copy()
+        df["Index"] = names[ticker]
+        df["Close"] = df["Close"] / df["Close"].iloc[0] * 100  #normalise to 100 at the start so all lines begin at the same point
+        frames.append(df)
+    return pd.concat(frames).reset_index()
 
 
 @st.cache_data(ttl=300)  #main reason I used caches, since yfinance regularly crashes if one user calls upon it too much
@@ -55,7 +68,6 @@ def get_all_indices():
         except:
             results[ticker]=(None, None)
     return results
-
 
 @st.cache_data(ttl=300)  #same cache logic as above
 def get_movers():
@@ -100,7 +112,7 @@ Kospi200_price, Kospi200_change=results["^KS200"]
 with st.sidebar:
     st.empty()
 
-st.text(" ")
+st.text(" ") #adding space between the title and the three columns below it
 st.text(" ")
 st.text(" ")
 st.text(" ")
@@ -157,14 +169,19 @@ with right_col:
         )
         st.divider()
 
-st.text(" ")
+st.text(" ") #adding space between the three columns and the Markets part, otherwise looks quite confusing
 st.text(" ")
 st.divider()
 
 #index part
-st.markdown("<h3 style='text-align: center;'>Markets</h3>", unsafe_allow_html=True)
-col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
+st.markdown("<h2 style='text-align: center;'>Markets</h3>", unsafe_allow_html=True)
 
+period = st.radio("Time range", ["1wk", "1mo", "1y"], horizontal=True, label_visibility="collapsed")
+history = get_index_history(period)
+chart_data = history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
+st.line_chart(chart_data)
+
+col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
 with col1:
     st.metric("S&P 500", sp500_price, f"{sp500_change}%")
 with col2:
