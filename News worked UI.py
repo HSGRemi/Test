@@ -186,17 +186,24 @@ chart_data=history.pivot(index="Date", columns="Index", values="Close") #pivot s
 fig=px.line(history, x="Date", y="Close", color="Index")
 st.plotly_chart(fig, use_container_width=True)
 
-col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
+flag_urls = {
+    "col1": "https://flagcdn.com/32x24/us.png",
+    "col2": "https://flagcdn.com/32x24/eu.png",
+    "col3": "https://flagcdn.com/32x24/hk.png",
+    "col4": "https://flagcdn.com/32x24/jp.png",
+    "col5": "https://flagcdn.com/32x24/kr.png"}
+col1, col2, col3, col4, col5=st.columns(5)  #five different columns, one for each ticker
 with col1:
-    st.markdown("🇺🇸"); st.metric("🇺🇸 S&P 500", sp500_price, f"{sp500_change}%")
+    st.image(flag_urls["col1"], width=32); st.metric("S&P 500", sp500_price, f"{sp500_change}%")
 with col2:
-    st.markdown("🇪🇺"); st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
+    st.image(flag_urls["col2"], width=32); st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
 with col3:
-    st.markdown("🇭🇰"); st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
+    st.image(flag_urls["col3"], width=32); st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
 with col4:
-    st.markdown("🇯🇵"); st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
+    st.image(flag_urls["col4"], width=32); st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
 with col5:
-    st.markdown("🇰🇷"); st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
+    st.image(flag_urls["col5"], width=32); st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
+
 
 with st.expander("💡 What does this mean?"): #beginner-friendly part to quickly explain how to read infos
     st.write("""
