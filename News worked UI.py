@@ -102,6 +102,8 @@ with st.sidebar:
 
 st.text(" ")
 st.text(" ")
+st.text(" ")
+st.text(" ")
 
 #creating a three column layout for the top gainers, news and top losers
 left_col, news_col, right_col = st.columns([1, 2, 1]) #the 1, 2, 1 ratio makes the news column twice as wide as each movers column since it needs space for the pictures
@@ -155,9 +157,12 @@ with right_col:
         )
         st.divider()
 
+st.text(" ")
+st.text(" ")
+st.divider()
 
 #index part
-st.subheader("Markets")
+st.markdown("<h3 style='text-align: center;'>Markets</h3>", unsafe_allow_html=True)
 col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
 
 with col1:
