@@ -45,7 +45,7 @@ def get_index_history(period):
     for ticker in tickers:
         df=data[ticker][["Close"]].dropna().copy()
         df["Index"]=names[ticker]
-        df["Close"]=df["Close"]/df["Close"].iloc[0]*0  #normalise to 100 at the start so all lines begin at the same point
+        df["Close"]=df["Close"]/df["Close"].iloc[-1]*100  #normalise to 100 at the start so all lines begin at the same point
         frames.append(df)
     return pd.concat(frames).reset_index()
 
@@ -176,9 +176,9 @@ st.divider()
 #index part
 st.markdown("<h2 style='text-align: center;'>Markets</h3>", unsafe_allow_html=True)
 
-period = st.radio("Time range", ["1wk", "1mo", "1y"], horizontal=True, label_visibility="collapsed")
-history = get_index_history(period)
-chart_data = history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
+period=st.radio("Time range", ["1wk", "1mo", "1y"], horizontal=True, label_visibility="collapsed")
+history=get_index_history(period)
+chart_data=history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
 st.line_chart(chart_data)
 
 col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
