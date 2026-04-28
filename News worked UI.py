@@ -56,10 +56,9 @@ def get_all_indices():
             results[ticker] = (None, None)
     return results
  
- 
 @st.cache_data(ttl=300)  # same cache logic as above
-def get_movers():# yfinance has a built-in screener that pulls Yahoo Finance's own top gainers/losers lists. This is the same data shown on finance.yahoo.com/markets/stocks/gainers
- gainers_data = yf.screen("day_gainers")  # pulls Yahoo Finance's own top gainers list
+def get_movers(): # yfinance has a built-in screener that pulls Yahoo Finance's own top gainers/losers lists. This is the same data shown on finance.yahoo.com/markets/stocks/gainers
+    gainers_data = yf.screen("day_gainers")  # pulls Yahoo Finance's own top gainers list
     gainers = [
         {"Ticker": q["symbol"], "Name": q.get("shortName", q["symbol"]), "Price": round(q.get("regularMarketPrice", 0), 2), "Change (%)": round(q.get("regularMarketChangePercent", 0), 2)}
         for q in gainers_data.get("quotes", [])[:5]  # take only the top 5
@@ -72,8 +71,7 @@ def get_movers():# yfinance has a built-in screener that pulls Yahoo Finance's o
     ]
  
     return pd.DataFrame(gainers), pd.DataFrame(losers)
- 
- 
+
 def fmt_price(x):
     if x is None or pd.isna(x):
         return "N/A"
