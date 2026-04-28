@@ -100,6 +100,9 @@ Kospi200_price, Kospi200_change=results["^KS200"]
 with st.sidebar:
     st.empty()
 
+st.text(" ")
+st.text(" ")
+
 #creating a three column layout for the top gainers, news and top losers
 left_col, news_col, right_col = st.columns([1, 2, 1]) #the 1, 2, 1 ratio makes the news column twice as wide as each movers column since it needs space for the pictures
 
