@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 
 st.set_page_config(page_title="Morning Market Digest", layout="wide")
-st.title("Morning Market Digest")
+st.title("**Morning Market Digest**")
 st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")  #date automatically updates every time the page loads
 
 @st.cache_data(ttl=1800)  #cache so that there aren't constant requests to the external websites and thus no risk of being blocked due to too high usage
