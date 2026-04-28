@@ -9,22 +9,25 @@ st.set_page_config(page_title="Morning Market Digest", layout="wide")
 st.title("**Morning Market Digest**")
 st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")  #date automatically updates every time the page loads
 
-@st.cache_data(ttl=1800)  #cache so that there aren't constant requests to the external websites and thus no risk of being blocked due to too high usage
+@st.cache_data(ttl=1800)
 def get_headlines():
-    feeds=["https://www.cnbc.com/id/100727362/device/rss/rss.html"]  #possibility of using multiple websites, but this one works well enough
-    entries=[]
-    for url in feeds:
-        feed=feedparser.parse(url)
-        for entry in feed.entries[:6]:  #takes the top 6 headlines
-            title=entry.title
-            link=entry.link
-            #try to grab the article image from the RSS feed metadata
-            image = None
-            if hasattr(entry, "media_thumbnail") and entry.media_thumbnail:
-                image=entry.media_thumbnail[0]["url"]
-            elif hasattr(entry, "media_content") and entry.media_content:
-                image=entry.media_content[0].get("url", None)
-            entries.append((title, link, image))
+    import requests
+    from bs4 import BeautifulSoup
+    feed = feedparser.parse("https://www.cnbc.com/id/100727362/device/rss/rss.html")
+    entries = []
+    for entry in feed.entries[:6]:
+        title = entry.title
+        link = entry.link
+        image = None
+        try:
+            response = requests.get(link, timeout=5, headers={"User-Agent": "Mozilla/5.0"})
+            soup = BeautifulSoup(response.text, "html.parser")
+            og_image = soup.find("meta", property="og:image")
+            if og_image:
+                image = og_image["content"]
+        except:
+            pass  #if fetching fails for any article, just show no image
+        entries.append((title, link, image))
     return entries
 
 
