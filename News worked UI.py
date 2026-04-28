@@ -11,14 +11,11 @@ st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")  #date automa
 
 st.markdown("""
     <style>
-    @keyframes run {
-        0%   { left: 100%; }
-        100% { left: 0%; }
-    }
     .monopoly-man {
         position: fixed;
-        top: 80px;
-        width: 80px;
+        top: 60px;
+        right: 20px;
+        width: 150px;
         z-index: 9999;
     }
     </style>
