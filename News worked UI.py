@@ -123,7 +123,7 @@ st.caption("Live data from Yahoo Finance's day gainers/losers screener")
 gainer_col, loser_col = st.columns(2)
  
 with gainer_col:
-    st.markdown("### 🟢 Top Gainers")
+    st.markdown("### Top Gainers")
     for _, row in top_gainers.iterrows():
         st.metric(
             label=f"{row['Ticker']} — {row['Name']}",
@@ -132,7 +132,7 @@ with gainer_col:
         )
  
 with loser_col:
-    st.markdown("### 🔴 Top Losers")
+    st.markdown("### Top Losers")
     for _, row in top_losers.iterrows():
         st.metric(
             label=f"{row['Ticker']} — {row['Name']}",
