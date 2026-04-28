@@ -188,15 +188,15 @@ st.plotly_chart(fig, use_container_width=True)
 
 col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
 with col1:
-    st.metric("🇺🇸 S&P 500", sp500_price, f"{sp500_change}%")
+    st.markdown("🇺🇸"); st.metric("🇺🇸 S&P 500", sp500_price, f"{sp500_change}%")
 with col2:
-    st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
+    st.markdown("🇪🇺"); st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
 with col3:
-    st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
+    st.markdown("🇭🇰"); st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
 with col4:
-    st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
+    st.markdown("🇯🇵"); st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
 with col5:
-    st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
+    st.markdown("🇰🇷"); st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
 
 with st.expander("💡 What does this mean?"): #beginner-friendly part to quickly explain how to read infos
     st.write("""
