@@ -18,7 +18,6 @@ st.markdown("""
     .monopoly-man {
         position: fixed;
         top: 80px;
-        animation: run 8s linear infinite;
         width: 80px;
         z-index: 9999;
     }
