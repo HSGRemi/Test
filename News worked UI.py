@@ -197,3 +197,12 @@ with col4:
     st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
 with col5:
     st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
+
+with st.expander("💡 What does this mean?"): #beginner-friendly part to quickly explain how to read infos
+    st.write("""
+    - In the graph, all indices start at 100 regardless of their actual value to better show the difference in performance
+    - Price = current level of the index in its own currency  
+    - % change = how much it moved since yesterday  
+    - 🟢 = market went up  
+    - 🔴 = market went down  
+    """)
