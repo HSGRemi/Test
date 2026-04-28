@@ -59,15 +59,13 @@ def get_all_indices():
  
 @st.cache_data(ttl=300)  # same cache logic as above
 def get_movers():# yfinance has a built-in screener that pulls Yahoo Finance's own top gainers/losers lists. This is the same data shown on finance.yahoo.com/markets/stocks/gainers
-    screener = yf.Screener()
-    screener.set_predefined_body("day_gainers") # Pull top gainers
-    gainers_data = screener.response  # returns a dict with a "quotes" key containing stock info
+ gainers_data = yf.screen("day_gainers")  # pulls Yahoo Finance's own top gainers list
     gainers = [
         {"Ticker": q["symbol"], "Name": q.get("shortName", q["symbol"]), "Price": round(q.get("regularMarketPrice", 0), 2), "Change (%)": round(q.get("regularMarketChangePercent", 0), 2)}
         for q in gainers_data.get("quotes", [])[:5]  # take only the top 5
     ]
-    screener.set_predefined_body("day_losers")    # Pull top losers
-    losers_data = screener.response
+ 
+    losers_data = yf.screen("day_losers")  # pulls Yahoo Finance's own top losers list
     losers = [
         {"Ticker": q["symbol"], "Name": q.get("shortName", q["symbol"]), "Price": round(q.get("regularMarketPrice", 0), 2), "Change (%)": round(q.get("regularMarketChangePercent", 0), 2)}
         for q in losers_data.get("quotes", [])[:5]  # take only the top 5
