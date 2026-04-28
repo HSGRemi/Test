@@ -4,233 +4,156 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime
  
-# ── PAGE SETTINGS ──────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Morning Market Digest", layout="centered")
- 
-# ── BACKGROUND BLOBS ───────────────────────────────────────────────────────────
-#
-# HOW THE BLOBS WORK (plain English):
-#
-#   1. Each blob is just a <div> (an invisible box) with:
-#        - a colour
-#        - a squished, wobbly shape (set by "border-radius")
-#        - a position on the page (top/left as a % of the screen)
-#        - a slow CSS animation that gently changes its shape over time
-#
-#   2. We define every blob as one line in the BLOBS list below.
-#      Each line has:  (colour,  width, height,  top%,  left%,  animation speed in seconds)
-#
-#   3. A loop at the bottom turns each line into real HTML automatically,
-#      so you never have to repeat yourself.
-#
-#   To ADD a blob:  add a new line to the BLOBS list.
-#   To CHANGE a colour: edit the hex colour code (e.g. "#FF4ECD" = hot pink).
-#   To MOVE a blob: change the top% and left% numbers (0 = top/left edge, 100 = bottom/right edge).
- 
-BLOBS = [
-    # colour       width    height   top%  left%  speed(s)
-    # — The page is divided into a 3-column x 3-row grid.
-    # — top%  moves a blob DOWN  the page  (0 = very top,  50 = middle, 85 = near bottom)
-    # — left% moves a blob ACROSS the page (0 = far left,  40 = centre, 75 = far right)
- 
-    # ROW 1 — top of the page
-    ("#FF4ECD",  "260px", "240px",  "2",  "2",   8),   # hot pink    — top-left
-    ("#FFD93D",  "240px", "220px",  "2",  "40",  10),  # yellow      — top-centre
-    ("#6CF0C2",  "250px", "230px",  "2",  "75",  12),  # mint green  — top-right
- 
-    # ROW 2 — middle of the page
-    ("#4FC3F7",  "240px", "220px",  "42", "2",   9),   # sky blue    — middle-left
-    ("#FF7043",  "220px", "200px",  "42", "40",  11),  # coral       — middle-centre
-    ("#B388FF",  "230px", "210px",  "42", "75",  7),   # purple      — middle-right
- 
-    # ROW 3 — bottom of the page
-    ("#FFABAB",  "250px", "230px",  "82", "2",   9),   # soft pink   — bottom-left
-    ("#A8D8EA",  "230px", "210px",  "82", "40",  11),  # pale blue   — bottom-centre
-    ("#B5EAD7",  "240px", "220px",  "82", "75",  8),   # mint        — bottom-right
-]
- 
-# Build one CSS block + one <div> per blob using a loop.
-# (You don't need to touch anything below this line to customise blobs!)
-blob_css   = ""   # will hold all the CSS rules
-blob_divs  = ""   # will hold all the <div> tags
- 
-for i, (colour, width, height, top, left, speed) in enumerate(BLOBS):
-    blob_name = f"blob-{i}"
-    blob_css += f"""
-    #{blob_name} {{
-        position: absolute;
-        width: {width}; height: {height};
-        background: {colour};
-        top: {top}%; left: {left}%;
-        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;  /* squished circle shape */
-        opacity: 0.55;                                        /* slightly see-through */
-        animation: wobble {speed}s ease-in-out infinite alternate; /* slow shape-shift */
-    }}
-    """
-    blob_divs += f'<div id="{blob_name}"></div>\n'
- 
-st.markdown(
-    f"""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
- 
-    .stApp {{
-        background-color: #f0f6ff;
-        font-family: 'Nunito', sans-serif;
-    }}
- 
-    /* The blob container sits behind everything else on the page */
-    #blob-container {{
-        position: fixed;   /* stays in place even when you scroll */
-        inset: 0;          /* covers the full screen */
-        z-index: 0;        /* behind all content */
-        pointer-events: none;   /* clicks pass straight through it */
-        overflow: hidden;
-    }}
- 
-    /* All content sits on top of the blobs */
-    .stApp > * {{ position: relative; z-index: 1; }}
- 
-    /* The wobble animation: slowly shifts the blob's shape */
-    @keyframes wobble {{
-        0%   {{ border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; transform: scale(1);    }}
-        50%  {{ border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; transform: scale(1.05); }}
-        100% {{ border-radius: 55% 45% 65% 35% / 35% 65% 40% 60%; transform: scale(0.97); }}
-    }}
- 
-    /* Individual blob styles (auto-generated from the BLOBS list above) */
-    {blob_css}
- 
-    /* Flag images above each market metric */
-    .flag-img {{
-        width: 36px; height: 24px;
-        object-fit: cover;
-        border-radius: 4px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-        margin-bottom: 4px;
-        display: block;
-    }}
- 
-    /* Semi-transparent card panels so blobs show through softly */
-    .market-card {{
-        background: rgba(255,255,255,0.70);
-        backdrop-filter: blur(12px);
-        border-radius: 18px;
-        padding: 1rem 1.2rem;
-        margin-bottom: 1.2rem;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-    }}
-    </style>
- 
-    <div id="blob-container">
-        {blob_divs}
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
- 
-# ── HEADER ─────────────────────────────────────────────────────────────────────
 st.title("Morning Market Digest")
-st.caption(f"Last updated: {datetime.now().strftime('%A, %d %B %Y')}")
+st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")  # date automatically updates every time the page loads
  
-st.sidebar.title("Morning Market Digest")
-st.sidebar.write("Simple overview of markets and news.")
- 
-# ── FLAG HELPER ────────────────────────────────────────────────────────────────
-# flagcdn.com is a free, no-signup CDN for country flag images.
-# Format: https://flagcdn.com/w40/{country_code}.png
-def flag_html(country_code: str) -> str:
-    """Return an <img> tag for a country flag from flagcdn.com."""
-    url = f"https://flagcdn.com/w40/{country_code.lower()}.png"
-    return f'<img src="{url}" class="flag-img" alt="{country_code} flag">'
- 
-# Map each ticker to its ISO 3166-1 alpha-2 country code
-TICKER_FLAGS = {
-    "^GSPC":  "us",   # S&P 500   → United States
-    "^STOXX": "eu",   # EuroStoxx → European Union
-    "^HSI":   "hk",   # Hang Seng → Hong Kong
-    "^N225":  "jp",   # Nikkei    → Japan
-    "^KS200": "kr",   # KOSPI     → South Korea
-}
- 
-# ── DATA FETCHING ──────────────────────────────────────────────────────────────
-@st.cache_data(ttl=1800)
+@st.cache_data(ttl=1800)  # cache so that there aren't constant requests to the external websites and thus no risk of being blocked due to too high usage
 def get_headlines():
-    feed = feedparser.parse("https://www.cnbc.com/id/100727362/device/rss/rss.html")
-    return [(entry.title, entry.link) for entry in feed.entries[:6]]
+    feeds = ["https://www.cnbc.com/id/100727362/device/rss/rss.html"]  # possibility of using multiple websites, but this one works well enough
+    entries = []
+    for url in feeds:
+        feed = feedparser.parse(url)
+        for entry in feed.entries[:6]:  # takes the top 6 headlines
+            title = entry.title
+            link = entry.link
+            # Try to grab the article image from the RSS feed metadata
+            image = None
+            if hasattr(entry, "media_thumbnail") and entry.media_thumbnail:
+                image = entry.media_thumbnail[0]["url"]
+            elif hasattr(entry, "media_content") and entry.media_content:
+                image = entry.media_content[0].get("url", None)
+            entries.append((title, link, image))
+    return entries
  
-@st.cache_data(ttl=300)
+ 
+def get_index_change(ticker):
+    hist = yf.Ticker(ticker).history(period="5d")  # looks at the last 5 days so that even if the market is closed over the weekend or holiday it works
+    if len(hist) < 2:
+        return None, None
+    prev = hist["Close"].iloc[-2]
+    last = hist["Close"].iloc[-1]
+    change = ((last - prev) / prev) * 100
+    return round(last, 2), round(change, 2)  # so that the numbers show up with rounded decimals
+ 
+ 
+@st.cache_data(ttl=300)  # main reason I used caches, since yfinance regularly crashes if one user calls upon it too much
 def get_all_indices():
-    tickers = ["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]
-    data = yf.download(tickers, period="5d", group_by="ticker", auto_adjust=True)
+    tickers = ["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]  # selection of biggest tickers
+    data = yf.download(tickers, period="5d", group_by="ticker")
     results = {}
     for ticker in tickers:
         try:
-            df = data[ticker].dropna()
+            df = data[ticker].dropna()  # dropna drops missing values from the downloaded tickers
             if len(df) < 2:
                 results[ticker] = (None, None)
                 continue
             prev = df["Close"].iloc[-2]
             last = df["Close"].iloc[-1]
             change = ((last - prev) / prev) * 100
-            results[ticker] = (round(float(last), 2), round(float(change), 2))
-        except Exception:
+            results[ticker] = (round(last, 2), round(change, 2))
+        except:
             results[ticker] = (None, None)
     return results
  
-# ── FORMAT HELPERS ─────────────────────────────────────────────────────────────
-def format_price(x):
-    if x is None or (isinstance(x, float) and pd.isna(x)):
+ 
+@st.cache_data(ttl=300)  # same cache logic as above
+def get_movers():# yfinance has a built-in screener that pulls Yahoo Finance's own top gainers/losers lists. This is the same data shown on finance.yahoo.com/markets/stocks/gainers
+    screener = yf.Screener()
+    screener.set_predefined_body("day_gainers") # Pull top gainers
+    gainers_data = screener.response  # returns a dict with a "quotes" key containing stock info
+    gainers = [
+        {"Ticker": q["symbol"], "Name": q.get("shortName", q["symbol"]), "Price": round(q.get("regularMarketPrice", 0), 2), "Change (%)": round(q.get("regularMarketChangePercent", 0), 2)}
+        for q in gainers_data.get("quotes", [])[:5]  # take only the top 5
+    ]
+    screener.set_predefined_body("day_losers")    # Pull top losers
+    losers_data = screener.response
+    losers = [
+        {"Ticker": q["symbol"], "Name": q.get("shortName", q["symbol"]), "Price": round(q.get("regularMarketPrice", 0), 2), "Change (%)": round(q.get("regularMarketChangePercent", 0), 2)}
+        for q in losers_data.get("quotes", [])[:5]  # take only the top 5
+    ]
+ 
+    return pd.DataFrame(gainers), pd.DataFrame(losers)
+ 
+ 
+def fmt_price(x):
+    if x is None or pd.isna(x):
         return "N/A"
     return f"{x:.2f}"
  
-def format_change(x):
-    """Return a signed percentage string, e.g. '+1.23%' or '-0.45%'."""
-    if x is None or (isinstance(x, float) and pd.isna(x)):
-        return None          # None makes st.metric show no delta
-    sign = "+" if x >= 0 else ""
-    return f"{sign}{x:.2f}%"
  
-# ── LOAD DATA ──────────────────────────────────────────────────────────────────
+def fmt_change(x):
+    if x is None or pd.isna(x):
+        return "N/A"
+    color = "🟢" if x > 0 else "🔴"
+    return f"{color} {x:.2f}%"
+ 
+#getting all the necessary info
 headlines = get_headlines()
-results   = get_all_indices()
+results = get_all_indices()
+top_gainers, top_losers = get_movers()
+
+#defining the index name for the yfinance API 
+sp500_price, sp500_change = results["^GSPC"]
+eurostoxx600_price, eurostoxx600_change = results["^STOXX"]
+HangSeng_price, HangSeng_change = results["^HSI"]
+Nikkei225_price, Nikkei225_change = results["^N225"]
+Kospi200_price, Kospi200_change = results["^KS200"]
  
-# ── NEWS SECTION ───────────────────────────────────────────────────────────────
-st.markdown('<div class="market-card">', unsafe_allow_html=True)
-st.subheader("📰 Top News")
-for title, link in headlines:
-    st.markdown(f"- [{title}]({link})")
-st.markdown('</div>', unsafe_allow_html=True)
  
-# ── MARKETS SECTION ────────────────────────────────────────────────────────────
-st.markdown('<div class="market-card">', unsafe_allow_html=True)
-st.subheader("🌍 Global Markets")
+st.subheader("Top News") #news section
  
-INDICES = [
-    ("^GSPC",  "S&P 500"),
-    ("^STOXX", "EuroStoxx 600"),
-    ("^HSI",   "Hang Seng"),
-    ("^N225",  "Nikkei 225"),
-    ("^KS200", "KOSPI 200"),
-]
+# Display news in a 3-column grid, two rows of 3 articles each with the article image if there's one
+cols = st.columns(3)
+for i, (title, link, image) in enumerate(headlines):
+    with cols[i % 3]:  # i % 3 cycles through columns 0, 1, 2 then back to 0
+        if image:
+            st.image(image, use_container_width=True)
+        else:
+            # Grey placeholder box if no image is available
+            st.markdown(
+                "<div style='background:#e0e0e0; height:120px; border-radius:6px; "
+                "display:flex; align-items:center; justify-content:center; "
+                "color:#888; font-size:13px;'>No image</div>",
+                unsafe_allow_html=True,
+            )
+        st.markdown(f"**[{title}]({link})**")  # bold clickable headline
+        st.markdown("---")  # thin divider between articles in the same column
  
-cols = st.columns(5)
-for col, (ticker, label) in zip(cols, INDICES):
-    price, change = results[ticker]
-    with col:
-        # Render the flag image above the metric
-        st.markdown(flag_html(TICKER_FLAGS[ticker]), unsafe_allow_html=True)
-        st.metric(label, format_price(price), format_change(change))
  
-st.markdown('</div>', unsafe_allow_html=True)
+st.subheader("Top Movers & Losers") #top losers and gainers section
+st.caption("Live data from Yahoo Finance's day gainers/losers screener")
  
-# ── BEGINNER HELP BOX ──────────────────────────────────────────────────────────
-with st.expander("💡 What does this mean?"):
-    st.write("""
-    - **Price** = the current level of the index
-    - **% change** = how much it moved since yesterday
-    - 🟢 green arrow = the market went **up** today
-    - 🔴 red arrow = the market went **down** today
+gainer_col, loser_col = st.columns(2)
  
-    Don't worry if the numbers look big — indices measure thousands of stocks together!
-    """)
+with gainer_col:
+    st.markdown("### 🟢 Top Gainers")
+    for _, row in top_gainers.iterrows():
+        st.metric(
+            label=f"{row['Ticker']} — {row['Name']}",
+            value=f"${row['Price']:.2f}",
+            delta=f"{row['Change (%)']:.2f}%"
+        )
+ 
+with loser_col:
+    st.markdown("### 🔴 Top Losers")
+    for _, row in top_losers.iterrows():
+        st.metric(
+            label=f"{row['Ticker']} — {row['Name']}",
+            value=f"${row['Price']:.2f}",
+            delta=f"{row['Change (%)']:.2f}%"
+        )
+ 
+st.subheader("Markets") #index section
+col1, col2, col3, col4, col5 = st.columns(5)  # five different columns, one for each ticker
+ 
+with col1:
+    st.metric("S&P 500", sp500_price, f"{sp500_change}%")
+with col2:
+    st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
+with col3:
+    st.metric("HangSeng Index", HangSeng_price, f"{HangSeng_change}%")
+with col4:
+    st.metric("Nikkei 225", Nikkei225_price, f"{Nikkei225_change}%")
+with col5:
+    st.metric("Kospi 200", Kospi200_price, f"{Kospi200_change}%")
