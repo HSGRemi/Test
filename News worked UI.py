@@ -3,6 +3,7 @@ import feedparser
 import yfinance as yf
 import pandas as pd
 from datetime import datetime
+import plotly.express as px
 
 st.set_page_config(page_title="Morning Market Digest", layout="wide")
 st.title("**Morning Market Digest**")
@@ -45,7 +46,7 @@ def get_index_history(period):
     for ticker in tickers:
         df=data[ticker][["Close"]].dropna().copy()
         df["Index"]=names[ticker]
-        df["Close"]=df["Close"]/df["Close"].iloc[-1]*100  #normalise to 100 at the start so all lines begin at the same point
+        df["Close"]=df["Close"]/df["Close"].iloc[0]*100  #normalise to 100 at the start so all lines begin at the same point
         frames.append(df)
     return pd.concat(frames).reset_index()
 
@@ -63,7 +64,7 @@ def get_all_indices():
                 continue
             prev=df["Close"].iloc[-2]
             last=df["Close"].iloc[-1]
-            change=((last - prev) / prev) * 100
+            change=((last-prev)/prev)*100
             results[ticker]=(round(last, 2), round(change, 2))
         except:
             results[ticker]=(None, None)
@@ -179,7 +180,8 @@ st.markdown("<h2 style='text-align: center;'>Markets</h3>", unsafe_allow_html=Tr
 period=st.radio("Time range", ["1wk", "1mo", "1y"], horizontal=True, label_visibility="collapsed")
 history=get_index_history(period)
 chart_data=history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
-st.line_chart(chart_data)
+fig=px.line(history, x="Date", y="Close", color="Index")
+st.plotly_chart(fig, use_container_width=True)
 
 col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
 with col1:
