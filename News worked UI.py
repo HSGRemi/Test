@@ -188,7 +188,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 col1, col2, col3, col4, col5 = st.columns(5)  #five different columns, one for each ticker
 with col1:
-    st.metric("S&P 500", sp500_price, f"{sp500_change}%")
+    st.metric("🇺🇸 S&P 500", sp500_price, f"{sp500_change}%")
 with col2:
     st.metric("EuroStoxx 600", eurostoxx600_price, f"{eurostoxx600_change}%")
 with col3:
