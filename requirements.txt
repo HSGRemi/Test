@@ -3,3 +3,4 @@ streamlit
 yfinance>=0.2.37
 pandas
 datetime
+beautifulsoup4
