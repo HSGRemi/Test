@@ -106,14 +106,14 @@ left_col, news_col, right_col = st.columns([1, 2, 1]) #the 1, 2, 1 ratio makes t
 
 #left column with top gainers
 with left_col:
-    st.markdown("<h3 style='color: green;'>🟢 Top Gainers</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: green;'> Top Gainers</h3>", unsafe_allow_html=True)
     st.caption("Live from Yahoo Finance")
     for _, row in top_gainers.iterrows():
         # Company name in large bold text, ticker + change below it
         st.markdown(
             f"<p style='font-size:17px; font-weight:bold; margin-bottom:2px;'>{row['Name']}</p>"
             f"<p style='margin-top:0px; color:gray;'>{row['Ticker']} &nbsp;|&nbsp; "
-            f"<span style='color:green;'>+{row['Change (%)']:.2f}%</span> &nbsp; ${row['Price']:.2f}</p>",
+            f"<span style='color:green;'>+{row['Change (%)']:.2f}%</span>",
             unsafe_allow_html=True,
         )
         st.divider()
@@ -140,14 +140,14 @@ with news_col:
 
 #right column with top losers
 with right_col:
-    st.markdown("<h3 style='color: red;'>🔴 Top Losers</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: red;'> Top Losers</h3>", unsafe_allow_html=True)
     st.caption("Live from Yahoo Finance")
     for _, row in top_losers.iterrows():
-        # Company name in large bold text, ticker + change below it
+        #company name in large bold text, ticker + change below it
         st.markdown(
             f"<p style='font-size:17px; font-weight:bold; margin-bottom:2px;'>{row['Name']}</p>"
             f"<p style='margin-top:0px; color:gray;'>{row['Ticker']} &nbsp;|&nbsp; "
-            f"<span style='color:red;'>{row['Change (%)']:.2f}%</span> &nbsp; ${row['Price']:.2f}</p>",
+            f"<span style='color:red;'>{row['Change (%)']:.2f}%</span>",
             unsafe_allow_html=True,
         )
         st.divider()
