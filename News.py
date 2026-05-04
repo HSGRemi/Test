@@ -232,7 +232,9 @@ period=st.radio("Time range", ["1W", "1M", "1Y"], horizontal=True, label_visibil
 period_map={"1W": "5d", "1M": "1mo", "1Y": "1y"}
 history=get_index_history(period_map[period])
 chart_data=history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
+history["Date"]=history["Date"].astype(str)
 fig=px.line(history, x="Date", y="Close", color="Index")
+fig.update_xaxes(type="category")
 st.plotly_chart(fig, use_container_width=True) #create chart
 
 flag_urls = {                   #I tried to put in flag emojis but it never worked, so this was the way Claude told me to do it
