@@ -91,6 +91,7 @@ def get_index_change(ticker):
 
 @st.cache_data(ttl=300) #same logic as above for the cache, but since market data is updated more frequently, less time is put in the cache
 def get_index_history(period): #this function is to create a graph of the different indices
+    period_map={"1W": "5d", "1M": "1mo", "1Y": "1y"}
     tickers=["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]
     names={"^GSPC": "S&P 500", "^STOXX": "EuroStoxx 600", "^HSI": "Hang Seng", "^N225": "Nikkei 225", "^KS200": "Kospi 200"}
     data=yf.download(tickers, period=period, group_by="ticker")
