@@ -91,7 +91,6 @@ def get_index_change(ticker):
 
 @st.cache_data(ttl=300) #same logic as above for the cache, but since market data is updated more frequently, less time is put in the cache
 def get_index_history(period): #this function is to create a graph of the different indices
-    period_map={"1W": "5d", "1M": "1mo", "1Y": "1y"}
     tickers=["^GSPC", "^STOXX", "^HSI", "^N225", "^KS200"]
     names={"^GSPC": "S&P 500", "^STOXX": "EuroStoxx 600", "^HSI": "Hang Seng", "^N225": "Nikkei 225", "^KS200": "Kospi 200"}
     data=yf.download(tickers, period=period, group_by="ticker")
@@ -230,7 +229,8 @@ st.divider()
 st.markdown("<h2 style='text-align: center;'>Markets</h3>", unsafe_allow_html=True) #centralising the "Markets" title to make it look nice, HTML was the easiest way to do that
 
 period=st.radio("Time range", ["1W", "1M", "1Y"], horizontal=True, label_visibility="collapsed") #defining the time periods for the table
-history=get_index_history(period)
+period_map={"1W": "5d", "1M": "1mo", "1Y": "1y"}
+history=get_index_history(period_map[period])
 chart_data=history.pivot(index="Date", columns="Index", values="Close") #pivot so each index becomes its own column
 fig=px.line(history, x="Date", y="Close", color="Index")
 st.plotly_chart(fig, use_container_width=True) #create chart
