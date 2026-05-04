@@ -24,8 +24,6 @@ st.title("**Morning Market Digest**")
 # Date automatically updates every time the page loads
 st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d')}")
 
-st.page_link("Home.py", label="Go to Homepage")
-
 # Adds the logo of our website at the top right corner
 st.markdown("""
     <style>
